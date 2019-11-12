@@ -1,38 +1,95 @@
 autoUpdate:
   enabled: true
-  schedule: '0 0 * * *'
+  schedule: 0 0 * * *
+bootConfigURL: https://github.com/cloudbees/arcalos-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
-  project: ""
+  clusterName: pr-98-1abc
+  environmentGitOwner: jenkins-x-bot-test
+  environmentGitPublic: true
+  externalDNSSAName: pr-98-1abc-dn
+  gitKind: github
+  gitName: github
+  gitPublic: true
+  gitServer: https://github.com
+  gke:
+    projectNumber: "693284362333"
+  kanikoSAName: pr-98-1abc-ko
+  namespace: jx
+  project: aps-pr-98-1abc
   provider: gke
-  zone: ""
-gitops: true
+  registry: gcr.io
+  vaultName: pr-98-1abc
+  vaultSAName: pr-98-1abc-vt
+  zone: us-east1-c
+environments:
+- ingress:
+    cloud_dns_secret_name: external-dns-gcp-sa
+    domain: aps-pr-98-1abc.jxaas.live
+    domainIssuerURL: https://jx-tenant-service-jx.aps-lordlemon.jxaas.live
+    externalDNS: true
+    namespaceSubDomain: -jx.
+    tls:
+      email: jenkins-x@cloudbees.com
+      enabled: true
+      production: false
+  key: dev
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: staging
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: production
 githubApp:
   enabled: false
-  url: ""
-  schedule: '0 0 * * *'
-environments:
-- key: dev
-- key: staging
-- key: production
+  schedule: 0 0 * * *
+  url: https://lighthouse-githubapp-jx.aps-lordlemon.jxaas.live
+gitops: true
 ingress:
-  domain: ""
-  externalDNS: false
+  cloud_dns_secret_name: external-dns-gcp-sa
+  domain: aps-pr-98-1abc.jxaas.live
+  domainIssuerURL: https://jx-tenant-service-jx.aps-lordlemon.jxaas.live
+  externalDNS: true
+  namespaceSubDomain: -jx.
   tls:
     email: jenkins-x@cloudbees.com
     enabled: true
     production: false
 kaniko: true
+repository: nexus
 secretStorage: vault
 storage:
+  backup:
+    enabled: true
+    url: gs://aps-pr-98-1abc-backup
   logs:
-    enabled: false
-    url: ""
+    enabled: true
+    url: gs://aps-pr-98-1abc-lts
   reports:
     enabled: false
     url: ""
   repository:
     enabled: false
     url: ""
+vault:
+  bucket: aps-pr-98-1abc-vault
+  key: pr-98-1abc-crypto-key
+  keyring: pr-98-1abc-keyring
+  name: pr-98-1abc
+  serviceAccount: pr-98-1abc-vt
+velero: {}
+versionStream:
+  ref: v0.0.106
+  url: https://github.com/cloudbees/arcalos-jenkins-x-versions.git
 webhook: prow
